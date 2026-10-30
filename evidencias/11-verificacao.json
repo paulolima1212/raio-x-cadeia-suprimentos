@@ -1,0 +1,74 @@
+[
+  {
+    "critical": {
+      "identity": {
+        "docker-reference": "localhost:5050/raio-x/app@sha256:6c695ea3077afa804eb26ccede44e066652d0078437f7cf12fbe6427e73d8fef"
+      },
+      "image": {
+        "docker-manifest-digest": "sha256:6c695ea3077afa804eb26ccede44e066652d0078437f7cf12fbe6427e73d8fef"
+      },
+      "type": "https://sigstore.dev/cosign/sign/v1"
+    },
+    "optional": {}
+  },
+  {
+    "critical": {
+      "identity": {
+        "docker-reference": "localhost:5050/raio-x/app@sha256:6c695ea3077afa804eb26ccede44e066652d0078437f7cf12fbe6427e73d8fef"
+      },
+      "image": {
+        "docker-manifest-digest": "sha256:6c695ea3077afa804eb26ccede44e066652d0078437f7cf12fbe6427e73d8fef"
+      },
+      "type": "https://sigstore.dev/cosign/sign/v1"
+    },
+    "optional": {}
+  },
+  {
+    "critical": {
+      "identity": {
+        "docker-reference": "localhost:5050/raio-x/app@sha256:6c695ea3077afa804eb26ccede44e066652d0078437f7cf12fbe6427e73d8fef"
+      },
+      "image": {
+        "docker-manifest-digest": "sha256:6c695ea3077afa804eb26ccede44e066652d0078437f7cf12fbe6427e73d8fef"
+      },
+      "type": "https://sigstore.dev/cosign/sign/v1"
+    },
+    "optional": {}
+  },
+  {
+    "critical": {
+      "identity": {
+        "docker-reference": "localhost:5050/raio-x/app@sha256:6c695ea3077afa804eb26ccede44e066652d0078437f7cf12fbe6427e73d8fef"
+      },
+      "image": {
+        "docker-manifest-digest": "sha256:6c695ea3077afa804eb26ccede44e066652d0078437f7cf12fbe6427e73d8fef"
+      },
+      "type": "https://cyclonedx.org/bom"
+    },
+    "optional": {}
+  },
+  {
+    "critical": {
+      "identity": {
+        "docker-reference": "localhost:5050/raio-x/app@sha256:6c695ea3077afa804eb26ccede44e066652d0078437f7cf12fbe6427e73d8fef"
+      },
+      "image": {
+        "docker-manifest-digest": "sha256:6c695ea3077afa804eb26ccede44e066652d0078437f7cf12fbe6427e73d8fef"
+      },
+      "type": "https://cyclonedx.org/bom"
+    },
+    "optional": {}
+  },
+  {
+    "critical": {
+      "identity": {
+        "docker-reference": "localhost:5050/raio-x/app@sha256:6c695ea3077afa804eb26ccede44e066652d0078437f7cf12fbe6427e73d8fef"
+      },
+      "image": {
+        "docker-manifest-digest": "sha256:6c695ea3077afa804eb26ccede44e066652d0078437f7cf12fbe6427e73d8fef"
+      },
+      "type": "https://cyclonedx.org/bom"
+    },
+    "optional": {}
+  }
+]

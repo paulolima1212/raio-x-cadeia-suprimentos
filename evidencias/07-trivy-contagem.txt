@@ -1,0 +1,2 @@
+{"imagem":"antes","CRITICAL":7,"HIGH":70,"LOW":12,"MEDIUM":65,"UNKNOWN":4}
+{"imagem":"depois","CRITICAL":1,"HIGH":29,"LOW":21,"MEDIUM":22,"UNKNOWN":3}

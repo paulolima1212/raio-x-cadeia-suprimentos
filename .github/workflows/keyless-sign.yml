@@ -1,0 +1,49 @@
+# Assinatura KEYLESS (Sigstore Fulcio + Rekor) usando o OIDC do GitHub Actions — o que o enunciado pede.
+# No PC do aluno o keyless exigiria login interativo no navegador; aqui a identidade é o próprio workflow.
+name: keyless-sign
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sign-verify:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write   # push no GHCR
+      id-token: write   # token OIDC -> certificado efêmero do Fulcio (sem chave guardada)
+    env:
+      IMG: ghcr.io/${{ github.repository }}/app
+      IDENTITY: https://github.com/${{ github.repository }}/.github/workflows/keyless-sign.yml@refs/heads/main
+      ISSUER: https://token.actions.githubusercontent.com
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+      - name: Policy Rego (gate)
+        run: |
+          docker run --rm -v "$PWD:/p" -w /p openpolicyagent/conftest:v0.71.1@sha256:0e77cdf7c1fcde035f3c579e4aaa6664ee2a8be5777eaa9af9f520cdd02280c0 test --no-color -p policy app/Dockerfile
+      - name: Build e push por digest
+        run: |
+          echo "${{ github.token }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          docker build -t "$IMG:${{ github.sha }}" app
+          docker push "$IMG:${{ github.sha }}"
+          echo "REF=$(docker inspect --format='{{index .RepoDigests 0}}' "$IMG:${{ github.sha }}")" >> "$GITHUB_ENV"
+      - name: Assinar keyless e atestar SBOM
+        run: |
+          cosign sign --yes "$REF"
+          cosign attest --yes --type cyclonedx --predicate sbom-depois.cdx.json "$REF"
+      - name: Verificar identidade (issuer + workflow)
+        run: |
+          cosign verify "$REF" --certificate-oidc-issuer "$ISSUER" --certificate-identity "$IDENTITY" | tee verify.json
+      - name: Negativo - imagem adulterada na mesma tag
+        run: |
+          echo 'console.log("malicioso")' > app/server.js
+          docker build -t "$IMG:${{ github.sha }}" app && docker push "$IMG:${{ github.sha }}"
+          if cosign verify "$IMG:${{ github.sha }}" --certificate-oidc-issuer "$ISSUER" --certificate-identity "$IDENTITY"; then
+            echo "ERRO: adulteração aceita"; exit 1; else echo "OK: adulteração detectada"; fi

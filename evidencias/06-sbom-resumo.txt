@@ -1,0 +1,2 @@
+{"imagem":"antes","formato":"CycloneDX","spec":"1.7","componentes":21070}
+{"imagem":"depois","formato":"CycloneDX","spec":"1.7","componentes":3487}

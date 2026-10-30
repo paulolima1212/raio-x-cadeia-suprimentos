@@ -1,0 +1,9 @@
+[OK] opa test: PASS: 5/5
+[OK] conftest BLOQUEOU Dockerfile.antes (exit 1)
+[OK] conftest aprovou Dockerfile (depois)
+[OK] vulnerabilidade real: CVE-2021-3177 (CRITICAL) em python2.7 2.7.16-2+deb10u1
+[OK] cosign verify OK para sha256:6c695ea3077afa804eb26ccede44e066652d0078437f7cf12fbe6427e73d8fef
+[OK] SBOM atestado e verificado
+[OK] adulteração DETECTADA pelo Cosign (a policy Rego sozinha não pega)
+[OK] assinatura não confere com chave de outra identidade
+[OK] manifesto de evidências com 27 linhas

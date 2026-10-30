@@ -1,0 +1,5 @@
+FAIL - app/Dockerfile.antes - main - Container roda como root: falta instrução USER
+FAIL - app/Dockerfile.antes - main - Imagem fora do registry aprovado (docker.io/library/): node:14
+FAIL - app/Dockerfile.antes - main - Imagem sem digest (tag mutável): node:14
+
+4 tests, 1 passed, 0 warnings, 3 failures, 0 exceptions

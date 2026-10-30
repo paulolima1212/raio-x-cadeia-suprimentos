@@ -1,0 +1,1 @@
+IMAGEM=localhost:5050/raio-x/app@sha256:6c695ea3077afa804eb26ccede44e066652d0078437f7cf12fbe6427e73d8fef

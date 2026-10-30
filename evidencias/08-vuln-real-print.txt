@@ -1,0 +1,3 @@
+│ libpython2.7-minimal        │ CVE-2021-3177  │ CRITICAL │              │ 2.7.16-2+deb10u1             │ 2.7.16-2+deb10u2             │ python: Stack-based buffer overflow in PyCArg_repr in        │
+│ libpython2.7-stdlib         │ CVE-2021-3177  │ CRITICAL │              │                              │ 2.7.16-2+deb10u2             │ python: Stack-based buffer overflow in PyCArg_repr in        │
+│ python2.7                   │ CVE-2021-3177  │ CRITICAL │ fixed        │ 2.7.16-2+deb10u1             │ 2.7.16-2+deb10u2             │ python: Stack-based buffer overflow in PyCArg_repr in        │

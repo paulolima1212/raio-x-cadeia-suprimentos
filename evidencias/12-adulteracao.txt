@@ -1,0 +1,7 @@
+tag 1.0.0 agora -> sha256:7bb39073be7836989c117b5d94f2a4ce62b66a3b52c83dc549f6c4481d9480bc (assinado era sha256:6c695ea3077afa804eb26ccede44e066652d0078437f7cf12fbe6427e73d8fef)
+--- conftest no Dockerfile adulterado (mesmo Dockerfile, código trocado):
+4 tests, 4 passed, 0 warnings, 0 failures, 0 exceptions
+--- cosign verify da tag adulterada:
+Error: no signatures found
+error during command execution: no signatures found
+exit=10

@@ -1,0 +1,5 @@
+# ANTES: sem nenhum controle — tag mutável, imagem antiga, roda como root
+FROM node:14
+WORKDIR /app
+COPY server.js .
+CMD ["node", "server.js"]

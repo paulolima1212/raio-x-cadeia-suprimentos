@@ -1,0 +1,6 @@
+Flag --tlog-upload has been deprecated, prefer using a --signing-config file with no transparency log services
+Signing artifact...
+Pushing signature to: localhost:5050/raio-x/app
+Flag --tlog-upload has been deprecated, prefer using a --signing-config file with no transparency log services
+Using payload from: sbom-depois.cdx.json
+Signing artifact...

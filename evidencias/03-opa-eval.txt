@@ -1,0 +1,8 @@
+--- app/Dockerfile.antes
+[
+  "Container roda como root: falta instrução USER",
+  "Imagem fora do registry aprovado (docker.io/library/): node:14",
+  "Imagem sem digest (tag mutável): node:14"
+]
+--- app/Dockerfile
+[]

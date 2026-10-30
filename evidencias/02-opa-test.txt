@@ -1,0 +1,12 @@
+policy/dockerfile_test.rego:17:
+data.main.test_registry_nao_aprovado_negado: PASS (1.345024ms)
+policy/dockerfile_test.rego:9:
+data.main.test_depois_aprovado: PASS (1.515133ms)
+policy/dockerfile_test.rego:22:
+data.main.test_tag_sem_digest_negado: PASS (1.790188ms)
+policy/dockerfile_test.rego:11:
+data.main.test_sem_user_negado: PASS (1.829169ms)
+policy/dockerfile_test.rego:15:
+data.main.test_user_root_negado: PASS (1.32435ms)
+--------------------------------------------------------------------------------
+PASS: 5/5

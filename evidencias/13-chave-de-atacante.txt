@@ -1,0 +1,13 @@
+Error: no matching attestations: failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+error during command execution: no matching attestations: failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+exit=1

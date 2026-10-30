@@ -1,0 +1,104 @@
+
+== 1. POLÍTICA — opa test (unitários) ==
+policy/dockerfile_test.rego:17:
+data.main.test_registry_nao_aprovado_negado: PASS (1.345024ms)
+policy/dockerfile_test.rego:9:
+data.main.test_depois_aprovado: PASS (1.515133ms)
+policy/dockerfile_test.rego:22:
+data.main.test_tag_sem_digest_negado: PASS (1.790188ms)
+policy/dockerfile_test.rego:11:
+data.main.test_sem_user_negado: PASS (1.829169ms)
+policy/dockerfile_test.rego:15:
+data.main.test_user_root_negado: PASS (1.32435ms)
+--------------------------------------------------------------------------------
+PASS: 5/5
+[OK] opa test: PASS: 5/5
+
+== 1b. POLÍTICA — opa eval no Dockerfile ANTES e DEPOIS ==
+--- app/Dockerfile.antes
+[
+  "Container roda como root: falta instrução USER",
+  "Imagem fora do registry aprovado (docker.io/library/): node:14",
+  "Imagem sem digest (tag mutável): node:14"
+]
+--- app/Dockerfile
+[]
+
+== 1c. POLÍTICA — conftest (gate): ANTES deve falhar, DEPOIS passar ==
+FAIL - app/Dockerfile.antes - main - Container roda como root: falta instrução USER
+FAIL - app/Dockerfile.antes - main - Imagem fora do registry aprovado (docker.io/library/): node:14
+FAIL - app/Dockerfile.antes - main - Imagem sem digest (tag mutável): node:14
+
+4 tests, 1 passed, 0 warnings, 3 failures, 0 exceptions
+
+4 tests, 4 passed, 0 warnings, 0 failures, 0 exceptions
+[OK] conftest BLOQUEOU Dockerfile.antes (exit 1)
+[OK] conftest aprovou Dockerfile (depois)
+
+== 2. INVENTÁRIO — build das duas imagens ==
+antes roda como: 0  | depois roda como: 1000
+
+== 2a. SBOM com Syft (1 comando) ==
+{"imagem":"antes","formato":"CycloneDX","spec":"1.7","componentes":21070}
+{"imagem":"depois","formato":"CycloneDX","spec":"1.7","componentes":3487}
+
+== 2b. Trivy (a partir do SBOM e da imagem) ==
+{"imagem":"antes","CRITICAL":7,"HIGH":70,"LOW":12,"MEDIUM":65,"UNKNOWN":4}
+{"imagem":"depois","CRITICAL":1,"HIGH":29,"LOW":21,"MEDIUM":22,"UNKNOWN":3}
+{
+  "CVE": "CVE-2021-3177",
+  "severidade": "CRITICAL",
+  "pacote": "python2.7",
+  "versao_instalada": "2.7.16-2+deb10u1",
+  "corrigida_em": "2.7.16-2+deb10u2",
+  "titulo": "python: Stack-based buffer overflow in PyCArg_repr in _ctypes/callproc.c",
+  "link": "https://avd.aquasec.com/nvd/cve-2021-3177"
+}
+│ libpython2.7-minimal        │ CVE-2021-3177  │ CRITICAL │              │ 2.7.16-2+deb10u1             │ 2.7.16-2+deb10u2             │ python: Stack-based buffer overflow in PyCArg_repr in        │
+│ libpython2.7-stdlib         │ CVE-2021-3177  │ CRITICAL │              │                              │ 2.7.16-2+deb10u2             │ python: Stack-based buffer overflow in PyCArg_repr in        │
+│ python2.7                   │ CVE-2021-3177  │ CRITICAL │ fixed        │ 2.7.16-2+deb10u1             │ 2.7.16-2+deb10u2             │ python: Stack-based buffer overflow in PyCArg_repr in        │
+[OK] vulnerabilidade real: CVE-2021-3177 (CRITICAL) em python2.7 2.7.16-2+deb10u1
+
+== 3. CADEIA — registry, push por digest e assinatura Cosign ==
+IMAGEM=localhost:5050/raio-x/app@sha256:6c695ea3077afa804eb26ccede44e066652d0078437f7cf12fbe6427e73d8fef
+[OK] cosign verify OK para sha256:6c695ea3077afa804eb26ccede44e066652d0078437f7cf12fbe6427e73d8fef
+[OK] SBOM atestado e verificado
+
+== 3b. ATAQUE — imagem adulterada publicada na mesma tag (cenário Aula 6) ==
+tag 1.0.0 agora -> sha256:7bb39073be7836989c117b5d94f2a4ce62b66a3b52c83dc549f6c4481d9480bc (assinado era sha256:6c695ea3077afa804eb26ccede44e066652d0078437f7cf12fbe6427e73d8fef)
+--- conftest no Dockerfile adulterado (mesmo Dockerfile, código trocado):
+4 tests, 4 passed, 0 warnings, 0 failures, 0 exceptions
+--- cosign verify da tag adulterada:
+Error: no signatures found
+error during command execution: no signatures found
+exit=10
+[OK] adulteração DETECTADA pelo Cosign (a policy Rego sozinha não pega)
+Error: no matching attestations: failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+error during command execution: no matching attestations: failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+failed to verify signature: could not verify envelope: accepted signatures do not match threshold, Found: 0, Expected 1
+exit=1
+[OK] assinatura não confere com chave de outra identidade
+
+== 4. COMPLIANCE — manifesto de evidências (hashes) ==
+[OK] manifesto de evidências com 27 linhas
+
+== Resumo ==
+[OK] opa test: PASS: 5/5
+[OK] conftest BLOQUEOU Dockerfile.antes (exit 1)
+[OK] conftest aprovou Dockerfile (depois)
+[OK] vulnerabilidade real: CVE-2021-3177 (CRITICAL) em python2.7 2.7.16-2+deb10u1
+[OK] cosign verify OK para sha256:6c695ea3077afa804eb26ccede44e066652d0078437f7cf12fbe6427e73d8fef
+[OK] SBOM atestado e verificado
+[OK] adulteração DETECTADA pelo Cosign (a policy Rego sozinha não pega)
+[OK] assinatura não confere com chave de outra identidade
+[OK] manifesto de evidências com 27 linhas
+RESULTADO: SUCESSO

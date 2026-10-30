@@ -1,0 +1,9 @@
+{
+  "CVE": "CVE-2021-3177",
+  "severidade": "CRITICAL",
+  "pacote": "python2.7",
+  "versao_instalada": "2.7.16-2+deb10u1",
+  "corrigida_em": "2.7.16-2+deb10u2",
+  "titulo": "python: Stack-based buffer overflow in PyCArg_repr in _ctypes/callproc.c",
+  "link": "https://avd.aquasec.com/nvd/cve-2021-3177"
+}
