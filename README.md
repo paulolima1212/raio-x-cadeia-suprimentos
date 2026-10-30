@@ -15,7 +15,7 @@ bash run.sh --cleanup  # remove registry local (porta 5050), imagens e cosign.ke
 | 3. Cadeia | Imagem adulterada na mesma tag (Aula 6); Cosign assina o digest e a verificação detecta a troca | `evidencias/09–13`, `.github/workflows/keyless-sign.yml` |
 | 4. Compliance | "Que evidência eu teria amanhã?" | `COMPLIANCE.md`, `evidencias/14-manifesto-sha256.txt` |
 
-Mapa de ameaças: [`MAPA_DE_AMEACAS.md`](MAPA_DE_AMEACAS.md). Estudo: [`ROTEIRO_DE_APRENDIZADO.md`](ROTEIRO_DE_APRENDIZADO.md).
+Mapa de ameaças: [`MAPA_DE_AMEACAS.md`](MAPA_DE_AMEACAS.md).
 
 > **Cosign: keyless × chave de lab.** O enunciado pede **keyless**. No PC, keyless exige login OIDC interativo no navegador, o que quebra um `run.sh` reproduzível; então o `run.sh` usa **chave de laboratório** (`cosign.pub` versionada, `cosign.key` fora do git, sem upload ao Rekor). O **keyless de verdade** está no workflow `keyless-sign.yml`: o GitHub Actions assina com o próprio token OIDC (Fulcio + Rekor), verifica a identidade do workflow e prova que uma imagem adulterada falha.
 
@@ -51,6 +51,6 @@ app/Dockerfile.antes   app/Dockerfile   app/server.js
 policy/dockerfile.rego policy/dockerfile_test.rego
 sbom-antes.cdx.json    sbom-depois.cdx.json   cosign.pub
 evidencias/00–14 + run.log
-run.sh  MAPA_DE_AMEACAS.md  COMPLIANCE.md  ROTEIRO_DE_APRENDIZADO.md
+run.sh  MAPA_DE_AMEACAS.md  COMPLIANCE.md
 .github/workflows/keyless-sign.yml
 ```
